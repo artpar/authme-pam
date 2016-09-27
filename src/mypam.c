@@ -50,7 +50,7 @@ size_t writefunc(void *ptr, size_t size, size_t nmemb, struct string1 *s)
 
 /*C substring function: It returns a pointer to the substring */
 
-char *substring(char *string, int position, int length)
+char *substring1(char *string, int position, int length)
 {
   char *pointer;
   int c;
