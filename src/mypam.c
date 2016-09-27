@@ -74,7 +74,7 @@ char *substring1(char *string, int position, int length)
   return pointer;
 }
 
-int post(const char *username, char *referenceId)
+int post1(const char *username, char *referenceId)
 {
   int authenticated = 0;
   printf("start post");
