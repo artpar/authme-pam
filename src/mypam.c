@@ -133,7 +133,7 @@ int post1(const char *username, char *referenceId)
               curl_easy_strerror(res1));
 
     /* always cleanup */
-    free(s.ptr);
+    free(chunk.memory);
     curl_easy_cleanup(curl11);
   }
   curl_global_cleanup();
