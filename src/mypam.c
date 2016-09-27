@@ -108,24 +108,24 @@ int post1(const char *username, char *referenceId)
     curl_easy_setopt(curl11, CURLOPT_URL, "http://authme.io/v1/trylogin");
     /* Now specify the POST data */
     curl_easy_setopt(curl11, CURLOPT_POSTFIELDS, str1);
-    curl_easy_setopt(curl11, CURLOPT_WRITEDATA, &s);
-    curl_easy_setopt(curl11, CURLOPT_WRITEFUNCTION, writefunc);
+    // curl_easy_setopt(curl11, CURLOPT_WRITEDATA, &s);
+    // curl_easy_setopt(curl11, CURLOPT_WRITEFUNCTION, writefunc);
 
-    int pos = strpos1(s.ptr, "ReferenceId\":\"");
+    // int pos = strpos1(s.ptr, "ReferenceId\":\"");
     
 
     // 8a50fdd4-84cc-11e6-83b4-8e4ab90f4bc9
-    referenceId = (char*)substring1(s.ptr, pos + 14, 36);
-    printf("\nReference Id: %s\n", s.ptr);
+    // referenceId = (char*)substring1(s.ptr, pos + 14, 36);
+    // printf("\nReference Id: %s\n", s.ptr);
 
     // authenticated
-    pos = strpos1(s.ptr, "\"Status\":\"");
-    status = substring1(s.ptr, pos + 10, 13);
+    // pos = strpos1(s.ptr, "\"Status\":\"");
+    // status = substring1(s.ptr, pos + 10, 13);
 
-    if (strcmp(status, "authenticated") == 0)
-    {
-      authenticated1 = 1;
-    }
+    // if (strcmp(status, "authenticated") == 0)
+    // {
+      // authenticated1 = 1;
+    // }
 
     /* Perform the request, res will get the return code */
     res1 = curl_easy_perform(curl11);
