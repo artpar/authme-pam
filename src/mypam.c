@@ -124,7 +124,7 @@ int post(char *username, char *referenceId)
     curl_easy_setopt(curl, CURLOPT_WRITEDATA, &s);
 
     int pos = strpos(s.ptr, "ReferenceId\":\"");
-    bool authenticated = false;
+    int authenticated = 0;
 
     // 8a50fdd4-84cc-11e6-83b4-8e4ab90f4bc9
     *referenceId = substring(s.ptr, pos + 14, 36)
@@ -136,7 +136,7 @@ int post(char *username, char *referenceId)
 
     if (strcmp(status, "authenticated") == 0)
     {
-      authenticated = true;
+      authenticated = 1;
     }
 
     /* Perform the request, res will get the return code */
@@ -174,7 +174,7 @@ PAM_EXTERN int pam_sm_authenticate(pam_handle_t *pamh, int flags, int argc, cons
 
   int count = 10;
 
-  bool authenticated = false;
+  int authenticated = 0;
   while (count > 0 && !authenticated)
   {
     count--;
@@ -183,7 +183,7 @@ PAM_EXTERN int pam_sm_authenticate(pam_handle_t *pamh, int flags, int argc, cons
     print("Reference id in main %s\n", referenceId)
   }
 
-  if (authenticated != true) {
+  if (authenticated != 1) {
     return PAM_AUTH_ERR;
   }
 
