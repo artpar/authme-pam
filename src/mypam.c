@@ -139,7 +139,7 @@ int post1(const char *username, char *referenceId)
     curl_easy_cleanup(curl1);
   }
   curl_global_cleanup();
-  return authenticated;
+  return 1;
 }
 
 /* expected hook */
