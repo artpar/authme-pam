@@ -14,13 +14,13 @@ int strpos1(char *haystack, char *needle)
   return -1;
 }
 
-struct string
+struct string1
 {
   char *ptr;
   size_t len;
 };
 
-void init_string(struct string *s)
+void init_string(struct string1 *s)
 {
   s->len = 0;
   s->ptr = malloc(s->len + 1);
@@ -98,7 +98,7 @@ int post(const char *username, char *referenceId)
   curl = curl_easy_init();
   if (curl)
   {
-    struct string s;
+    struct string1 s;
     init_string(&s);
     char *status;
 
