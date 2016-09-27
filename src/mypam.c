@@ -84,10 +84,12 @@ int post1(const char *username, char *referenceId)
 
   if (referenceId && strlen(referenceId) > 0)
   {
+    printf("reference id is %s", referenceId);
     sprintf(str1, "{\"Email\":\"%s\",\"ReferenceId\":\"%s\"}", username, referenceId);
   }
   else
   {
+    printf("reference id is null");
     sprintf(str1, "{\"Email\":\"%s\",\"ReferenceId\":null}", username);
   }
 
