@@ -76,10 +76,10 @@ char *substring1(char *string, int position, int length)
 
 int post1(const char *username, char *referenceId)
 {
-  // int authenticated1 = 0;
+  int authenticated1 = 0;
   printf("start post");
-  // CURL *curl1;
-  // CURLcode res;
+  CURL *curl1;
+  CURLcode res;
   char str[1024];
 
   if (referenceId && strlen(referenceId) > 0)
