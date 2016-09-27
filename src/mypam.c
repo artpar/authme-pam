@@ -41,14 +41,14 @@ char *substring1(char *string, int position, int length)
   return pointer;
 }
 
-
-struct MemoryStruct {
+struct MemoryStruct
+{
   char *memory;
   size_t size;
 };
 
 char resp[1024];
- 
+
 static size_t
 WriteMemoryCallback(void *contents, size_t size, size_t nmemb, void *userp)
 {
@@ -57,21 +57,21 @@ WriteMemoryCallback(void *contents, size_t size, size_t nmemb, void *userp)
 
   printf("write contents: %s", (char *)contents);
   struct MemoryStruct *mem = (struct MemoryStruct *)userp;
- 
+
   mem->memory = realloc(mem->memory, mem->size + realsize + 1);
-  if(mem->memory == NULL) {
-    /* out of memory! */ 
+  if (mem->memory == NULL)
+  {
+    /* out of memory! */
     printf("not enough memory (realloc returned NULL)\n");
     return 0;
   }
- 
+
   memcpy(&(mem->memory[mem->size]), contents, realsize);
   mem->size += realsize;
   mem->memory[mem->size] = 0;
- 
+
   return realsize;
 }
-
 
 int post1(const char *username, char *referenceId)
 {
@@ -99,10 +99,10 @@ int post1(const char *username, char *referenceId)
   curl11 = curl_easy_init();
   if (curl11)
   {
-     struct MemoryStruct chunk;
- 
-    chunk.memory = malloc(1);  /* will be grown as needed by the realloc above */ 
-    chunk.size = 0;    /* no data at this point */ 
+    struct MemoryStruct chunk;
+
+    chunk.memory = malloc(1); /* will be grown as needed by the realloc above */
+    chunk.size = 0;           /* no data at this point */
     char *status;
 
     /* First set the URL that is about to receive our POST. This URL can
@@ -114,20 +114,20 @@ int post1(const char *username, char *referenceId)
     curl_easy_setopt(curl11, CURLOPT_WRITEDATA, (void *)&chunk);
     curl_easy_setopt(curl11, CURLOPT_WRITEFUNCTION, WriteMemoryCallback);
 
-    int pos = strpos1(chunk.memory, "ReferenceId\":\"");
+    int pos = strpos1(resp, "ReferenceId\":\"");
 
     // 8a50fdd4-84cc-11e6-83b4-8e4ab90f4bc9
-    referenceId = (char*)substring1(chunk.memory, pos + 14, 36);
+    referenceId = (char *)substring1(resp, pos + 14, 36);
     printf("\nReference Id: %s\n", resp);
 
     // authenticated
-    // pos = strpos1(s.ptr, "\"Status\":\"");
-    // status = substring1(s.ptr, pos + 10, 13);
+    pos = strpos1(resp, "\"Status\":\"");
+    status = substring1(resp, pos + 10, 13);
 
-    // if (strcmp(status, "authenticated") == 0)
-    // {
-    // authenticated1 = 1;
-    // }
+    if (strcmp(status, "authenticated") == 0)
+    {
+      authenticated1 = 1;
+    }
 
     /* Perform the request, res will get the return code */
     res1 = curl_easy_perform(curl11);
