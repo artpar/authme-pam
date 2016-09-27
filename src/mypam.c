@@ -92,7 +92,7 @@ int post1(const char *username, char *referenceId)
   }
 
   /* In windows, this will init the winsock stuff */
-  curl_global_init(CURL_GLOBAL_ALL);
+  // curl_global_init(CURL_GLOBAL_ALL);
 
   /* get a curl handle */
   // curl1 = curl_easy_init();
