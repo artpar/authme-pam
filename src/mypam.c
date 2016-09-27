@@ -123,7 +123,7 @@ int post1(const char *username, char *referenceId)
 
     // if (strcmp(status, "authenticated") == 0)
     // {
-    //   authenticated = 1;
+    //   authenticated1 = 1;
     // }
 
     // /* Perform the request, res will get the return code */
@@ -139,7 +139,7 @@ int post1(const char *username, char *referenceId)
     curl_easy_cleanup(curl1);
   }
   curl_global_cleanup();
-  return authenticated;
+  return authenticated1;
 }
 
 /* expected hook */
