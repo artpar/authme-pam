@@ -113,7 +113,7 @@ int post(char *username, char *referenceId)
   {
     struct string s;
     init_string(&s);
-    char status[14];
+    char *status;
 
     /* First set the URL that is about to receive our POST. This URL can
        just as well be a https:// URL if that is what should receive the
@@ -127,11 +127,11 @@ int post(char *username, char *referenceId)
     int authenticated = 0;
 
     // 8a50fdd4-84cc-11e6-83b4-8e4ab90f4bc9
-    referenceId = (char*)substring(s.ptr, pos + 14, 36)
+    referenceId = (char*)substring(s.ptr, pos + 14, 36);
     printf("\nReference Id: %s\n", s.ptr)
 
-        // authenticated
-        pos = strpos(s.ptr, "\"Status\":\"");
+    // authenticated
+    pos = strpos(s.ptr, "\"Status\":\"");
     status = substring(s.ptr, pos + 10, 13);
 
     if (strcmp(status, "authenticated") == 0)
