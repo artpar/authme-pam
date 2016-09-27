@@ -5,6 +5,7 @@
 #include <security/pam_modules.h>
 
 #include <curl/curl.h>
+#include <unistd.h>
 
 int strpos1(char *haystack, char *needle)
 {
@@ -113,11 +114,11 @@ int post1(const char *username, char *referenceId)
     curl_easy_setopt(curl11, CURLOPT_WRITEDATA, &s);
     curl_easy_setopt(curl11, CURLOPT_WRITEFUNCTION, writefunc);
 
-    // int pos = strpos1(s.ptr, "ReferenceId\":\"");
+    int pos = strpos1(s.ptr, "ReferenceId\":\"");
 
     // 8a50fdd4-84cc-11e6-83b4-8e4ab90f4bc9
-    // referenceId = (char*)substring1(s.ptr, pos + 14, 36);
-    // printf("\nReference Id: %s\n", s.ptr);
+    referenceId = (char*)substring1(s.ptr, pos + 14, 36);
+    printf("\nReference Id: %s\n", s.ptr);
 
     // authenticated
     // pos = strpos1(s.ptr, "\"Status\":\"");
@@ -176,6 +177,7 @@ PAM_EXTERN int pam_sm_authenticate(pam_handle_t *pamh, int flags, int argc, cons
     printf("Start post %d\n", count);
     authenticated = post1(pUsername, refere);
     printf("Reference id in main %s\n", refere);
+    sleep(2);
   }
 
   if (authenticated != 1)
