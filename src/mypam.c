@@ -127,8 +127,8 @@ int post(char *username, char *referenceId)
     int authenticated = 0;
 
     // 8a50fdd4-84cc-11e6-83b4-8e4ab90f4bc9
-    *referenceId = substring(s.ptr, pos + 14, 36)
-        printf("\nReference Id: %s\n", s.ptr)
+    referenceId = (char*)substring(s.ptr, pos + 14, 36)
+    printf("\nReference Id: %s\n", s.ptr)
 
         // authenticated
         pos = strpos(s.ptr, "\"Status\":\"");
