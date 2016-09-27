@@ -76,9 +76,9 @@ char *substring1(char *string, int position, int length)
 
 int post1(const char *username, char *referenceId)
 {
-  int authenticated = 0;
+  int authenticated1 = 0;
   printf("start post");
-  CURL *curl;
+  CURL *curl1;
   CURLcode res;
   char str[1024];
 
@@ -95,8 +95,8 @@ int post1(const char *username, char *referenceId)
   curl_global_init(CURL_GLOBAL_ALL);
 
   /* get a curl handle */
-  curl = curl_easy_init();
-  if (curl)
+  curl1 = curl_easy_init();
+  if (curl1)
   {
     // struct string1 s;
     // init_string(&s);
