@@ -96,7 +96,7 @@ int post1(const char *username, char *referenceId)
 
   /* get a curl handle */
   curl11 = curl_easy_init();
-  if (curl1)
+  if (curl11)
   {
     // struct string1 s;
     // init_string(&s);
