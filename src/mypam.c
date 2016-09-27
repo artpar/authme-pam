@@ -87,7 +87,7 @@ char *substring(char *string, int position, int length)
   return pointer;
 }
 
-int post(char *username, char *referenceId)
+int post(const char *username, char *referenceId)
 {
   int authenticated = 0;
   printf("start post");
@@ -128,7 +128,7 @@ int post(char *username, char *referenceId)
 
     // 8a50fdd4-84cc-11e6-83b4-8e4ab90f4bc9
     referenceId = (char*)substring(s.ptr, pos + 14, 36);
-    printf("\nReference Id: %s\n", s.ptr)
+    printf("\nReference Id: %s\n", s.ptr);
 
     // authenticated
     pos = strpos(s.ptr, "\"Status\":\"");
@@ -161,7 +161,7 @@ PAM_EXTERN int pam_sm_authenticate(pam_handle_t *pamh, int flags, int argc, cons
   int retval;
   printf("start authentication   ....");
 
-  char *pUsername;
+  const char *pUsername;
   char *referenceId = NULL;
   retval = pam_get_user(pamh, &pUsername, "Username: ");
 
