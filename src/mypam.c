@@ -109,7 +109,7 @@ int post1(const char *username, char *referenceId)
     /* Now specify the POST data */
     curl_easy_setopt(curl11, CURLOPT_POSTFIELDS, str1);
     curl_easy_setopt(curl11, CURLOPT_WRITEDATA, &s);
-    curl_easy_setopt(curl, CURLOPT_WRITEFUNCTION, writefunc);
+    curl_easy_setopt(curl11, CURLOPT_WRITEFUNCTION, writefunc);
 
     int pos = strpos1(s.ptr, "ReferenceId\":\"");
     
