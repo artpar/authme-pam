@@ -136,7 +136,7 @@ int post1(const char *username, char *referenceId)
 
     // /* always cleanup */
     // free(s.ptr);
-    curl_easy_cleanup(curl);
+    curl_easy_cleanup(curl1);
   }
   curl_global_cleanup();
   return authenticated;
