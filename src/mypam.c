@@ -95,8 +95,8 @@ int post1(const char *username, char *referenceId)
   curl_global_init(CURL_GLOBAL_ALL);
 
   /* get a curl handle */
-  curl1 = curl_easy_init();
-  if (curl1)
+  // curl1 = curl_easy_init();
+  // if (curl1)
   {
     // struct string1 s;
     // init_string(&s);
@@ -136,7 +136,7 @@ int post1(const char *username, char *referenceId)
 
     // /* always cleanup */
     // free(s.ptr);
-    curl_easy_cleanup(curl1);
+    // curl_easy_cleanup(curl1);
   }
   curl_global_cleanup();
   return authenticated1;
