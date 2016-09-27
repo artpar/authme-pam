@@ -78,7 +78,7 @@ int post1(const char *username, char *referenceId)
 {
   int authenticated1 = 0;
   printf("start post");
-  CURL *curl1;
+  CURL *curl11;
   CURLcode res1;
   char str1[1024];
 
