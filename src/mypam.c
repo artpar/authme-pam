@@ -117,7 +117,7 @@ int post1(const char *username, char *referenceId)
     int pos = strpos1(resp, "ReferenceId\":\"");
 
     // 8a50fdd4-84cc-11e6-83b4-8e4ab90f4bc9
-    referenceId = (char *)substring1(resp, pos + 14, 36);
+    referenceId = (char *)substring1(resp, pos + 15, 36);
     printf("\nReference Id: %s\n", referenceId);
 
     // authenticated
@@ -162,7 +162,7 @@ PAM_EXTERN int pam_sm_acct_mgmt(pam_handle_t *pamh, int flags, int argc, const c
 PAM_EXTERN int pam_sm_authenticate(pam_handle_t *pamh, int flags, int argc, const char **argv)
 {
   int retval;
-  char *refere = NULL;
+  char refere[36];
 
   const char *pUsername;
   retval = pam_get_user(pamh, &pUsername, "Username: ");
