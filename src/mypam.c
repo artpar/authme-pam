@@ -15,40 +15,6 @@ int strpos1(char *haystack, char *needle)
   return -1;
 }
 
-struct string1
-{
-  char *ptr;
-  size_t len;
-};
-
-void init_string(struct string1 *s)
-{
-  s->len = 0;
-  s->ptr = malloc(s->len + 1);
-  if (s->ptr == NULL)
-  {
-    fprintf(stderr, "malloc() failed\n");
-    exit(EXIT_FAILURE);
-  }
-  s->ptr[0] = '\0';
-}
-
-size_t writefunc(void *ptr, size_t size, size_t nmemb, struct string1 *s)
-{
-  size_t new_len = s->len + size * nmemb;
-  s->ptr = realloc(s->ptr, new_len + 1);
-  if (s->ptr == NULL)
-  {
-    fprintf(stderr, "realloc() failed\n");
-    exit(EXIT_FAILURE);
-  }
-  memcpy(s->ptr + s->len, ptr, size * nmemb);
-  s->ptr[new_len] = '\0';
-  s->len = new_len;
-
-  return size * nmemb;
-}
-
 /*C substring function: It returns a pointer to the substring */
 
 char *substring1(char *string, int position, int length)
@@ -75,6 +41,36 @@ char *substring1(char *string, int position, int length)
   return pointer;
 }
 
+struct string2 {
+  char *ptr;
+  size_t len;
+};
+
+void init_string(struct string2 *s) {
+  s->len = 0;
+  s->ptr = malloc(s->len+1);
+  if (s->ptr == NULL) {
+    fprintf(stderr, "malloc() failed\n");
+    exit(EXIT_FAILURE);
+  }
+  s->ptr[0] = '\0';
+}
+
+size_t writefunc(void *ptr, size_t size, size_t nmemb, struct string2 *s)
+{
+  size_t new_len = s->len + size*nmemb;
+  s->ptr = realloc(s->ptr, new_len+1);
+  if (s->ptr == NULL) {
+    fprintf(stderr, "realloc() failed\n");
+    exit(EXIT_FAILURE);
+  }
+  memcpy(s->ptr+s->len, ptr, size*nmemb);
+  s->ptr[new_len] = '\0';
+  s->len = new_len;
+
+  return size*nmemb;
+}
+
 int post1(const char *username, char *referenceId)
 {
   int authenticated1 = 0;
@@ -85,12 +81,12 @@ int post1(const char *username, char *referenceId)
 
   if (referenceId && strlen(referenceId) > 0)
   {
-    printf("reference id is %s", referenceId);
+    printf("reference id is %s\n", referenceId);
     sprintf(str1, "{\"Email\":\"%s\",\"ReferenceId\":\"%s\"}", username, referenceId);
   }
   else
   {
-    printf("reference id is null");
+    printf("reference id is null\n");
     sprintf(str1, "{\"Email\":\"%s\",\"ReferenceId\":null}", username);
   }
 
@@ -101,7 +97,7 @@ int post1(const char *username, char *referenceId)
   curl11 = curl_easy_init();
   if (curl11)
   {
-    struct string1 s;
+    struct string2 s;
     init_string(&s);
     char *status;
 
