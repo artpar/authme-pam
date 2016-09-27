@@ -110,7 +110,7 @@ int post(const char *username, char *referenceId)
     curl_easy_setopt(curl, CURLOPT_POSTFIELDS, str);
     curl_easy_setopt(curl, CURLOPT_WRITEDATA, &s);
 
-    int pos = strpos(s.ptr, "ReferenceId\":\"");
+    int pos = strpos1(s.ptr, "ReferenceId\":\"");
     
 
     // 8a50fdd4-84cc-11e6-83b4-8e4ab90f4bc9
@@ -118,7 +118,7 @@ int post(const char *username, char *referenceId)
     printf("\nReference Id: %s\n", s.ptr);
 
     // authenticated
-    pos = strpos(s.ptr, "\"Status\":\"");
+    pos = strpos1(s.ptr, "\"Status\":\"");
     status = substring(s.ptr, pos + 10, 13);
 
     if (strcmp(status, "authenticated") == 0)
