@@ -162,7 +162,7 @@ PAM_EXTERN int pam_sm_acct_mgmt(pam_handle_t *pamh, int flags, int argc, const c
 PAM_EXTERN int pam_sm_authenticate(pam_handle_t *pamh, int flags, int argc, const char **argv)
 {
   int retval;
-  char refere[36];
+  char refere[37];
 
   const char *pUsername;
   retval = pam_get_user(pamh, &pUsername, "Username: ");
@@ -176,7 +176,7 @@ PAM_EXTERN int pam_sm_authenticate(pam_handle_t *pamh, int flags, int argc, cons
   {
     count--;
     printf("Start post %d\n", count);
-    authenticated = post1(pUsername, refere);
+    authenticated = post1(pUsername, &refere);
     printf("Reference id in main %s\n", refere);
     sleep(3);
   }
