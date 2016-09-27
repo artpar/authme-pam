@@ -18,6 +18,7 @@ int strpos(char *haystack, char *needle)
 /* expected hook */
 PAM_EXTERN int pam_sm_setcred(pam_handle_t *pamh, int flags, int argc, const char **argv)
 {
+  printf("Acct pam_sm_setcred\n");
   return PAM_SUCCESS;
 }
 
