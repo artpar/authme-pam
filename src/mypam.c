@@ -79,16 +79,16 @@ int post1(const char *username, char *referenceId)
   int authenticated1 = 0;
   printf("start post");
   CURL *curl1;
-  CURLcode res;
-  char str[1024];
+  CURLcode res1;
+  char str1[1024];
 
   if (referenceId && strlen(referenceId) > 0)
   {
-    sprintf(str, "{\"Email\":\"%s\",\"ReferenceId\":\"%s\"}", username, referenceId);
+    sprintf(str1, "{\"Email\":\"%s\",\"ReferenceId\":\"%s\"}", username, referenceId);
   }
   else
   {
-    sprintf(str, "{\"Email\":\"%s\",\"ReferenceId\":null}", username);
+    sprintf(str1, "{\"Email\":\"%s\",\"ReferenceId\":null}", username);
   }
 
   /* In windows, this will init the winsock stuff */
