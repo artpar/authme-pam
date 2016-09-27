@@ -51,6 +51,7 @@ static size_t
 WriteMemoryCallback(void *contents, size_t size, size_t nmemb, void *userp)
 {
   size_t realsize = size * nmemb;
+  print("write contents: %s", contents)
   struct MemoryStruct *mem = (struct MemoryStruct *)userp;
  
   mem->memory = realloc(mem->memory, mem->size + realsize + 1);
@@ -133,6 +134,7 @@ int post1(const char *username, char *referenceId)
               curl_easy_strerror(res1));
 
     /* always cleanup */
+    printf("%lu bytes retrieved\n", (long)chunk.size);
     free(chunk.memory);
     curl_easy_cleanup(curl11);
   }
