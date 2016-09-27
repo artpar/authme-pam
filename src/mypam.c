@@ -32,7 +32,7 @@ void init_string(struct string1 *s)
   s->ptr[0] = '\0';
 }
 
-size_t writefunc(void *ptr, size_t size, size_t nmemb, struct string *s)
+size_t writefunc(void *ptr, size_t size, size_t nmemb, struct string1 *s)
 {
   size_t new_len = s->len + size * nmemb;
   s->ptr = realloc(s->ptr, new_len + 1);
