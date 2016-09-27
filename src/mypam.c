@@ -76,10 +76,10 @@ char *substring1(char *string, int position, int length)
 
 int post1(const char *username, char *referenceId)
 {
-  int authenticated1 = 0;
+  // int authenticated1 = 0;
   printf("start post");
-  CURL *curl1;
-  CURLcode res;
+  // CURL *curl1;
+  // CURLcode res;
   char str[1024];
 
   if (referenceId && strlen(referenceId) > 0)
@@ -92,11 +92,11 @@ int post1(const char *username, char *referenceId)
   }
 
   /* In windows, this will init the winsock stuff */
-  curl_global_init(CURL_GLOBAL_ALL);
+  // curl_global_init(CURL_GLOBAL_ALL);
 
   /* get a curl handle */
-  curl1 = curl_easy_init();
-  if (curl1)
+  // curl1 = curl_easy_init();
+  // if (curl1)
   {
     // struct string1 s;
     // init_string(&s);
@@ -136,9 +136,9 @@ int post1(const char *username, char *referenceId)
 
     // /* always cleanup */
     // free(s.ptr);
-    curl_easy_cleanup(curl1);
+    // curl_easy_cleanup(curl1);
   }
-  curl_global_cleanup();
+  // curl_global_cleanup();
   return 1;
 }
 
