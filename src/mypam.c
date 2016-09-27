@@ -114,7 +114,6 @@ int post1(const char *username, char *referenceId)
     // curl_easy_setopt(curl11, CURLOPT_WRITEFUNCTION, writefunc);
 
     // int pos = strpos1(s.ptr, "ReferenceId\":\"");
-    
 
     // 8a50fdd4-84cc-11e6-83b4-8e4ab90f4bc9
     // referenceId = (char*)substring1(s.ptr, pos + 14, 36);
@@ -126,7 +125,7 @@ int post1(const char *username, char *referenceId)
 
     // if (strcmp(status, "authenticated") == 0)
     // {
-      // authenticated1 = 1;
+    // authenticated1 = 1;
     // }
 
     /* Perform the request, res will get the return code */
@@ -146,32 +145,53 @@ int post1(const char *username, char *referenceId)
 }
 
 /* expected hook */
-PAM_EXTERN int pam_sm_setcred( pam_handle_t *pamh, int flags, int argc, const char **argv ) {
-	return PAM_SUCCESS;
+PAM_EXTERN int pam_sm_setcred(pam_handle_t *pamh, int flags, int argc, const char **argv)
+{
+  return PAM_SUCCESS;
 }
 
-PAM_EXTERN int pam_sm_acct_mgmt(pam_handle_t *pamh, int flags, int argc, const char **argv) {
-	printf("Acct mgmt\n");
-	return PAM_SUCCESS;
+PAM_EXTERN int pam_sm_acct_mgmt(pam_handle_t *pamh, int flags, int argc, const char **argv)
+{
+  printf("Acct mgmt\n");
+  return PAM_SUCCESS;
 }
 
 /* expected hook, this is where custom stuff happens */
-PAM_EXTERN int pam_sm_authenticate( pam_handle_t *pamh, int flags,int argc, const char **argv ) {
-	int retval; char *refere = NULL;
+PAM_EXTERN int pam_sm_authenticate(pam_handle_t *pamh, int flags, int argc, const char **argv)
+{
+  int retval;
+  char *refere = NULL;
 
-	const char* pUsername;
-	retval = pam_get_user(pamh, &pUsername, "Username: ");
+  const char *pUsername;
+  retval = pam_get_user(pamh, &pUsername, "Username: ");
 
-	printf("Welcome 321 %s\n", pUsername);
-  post1(pUsername, refere);
+  printf("Welcome 321 %s\n", pUsername);
 
-	if (retval != PAM_SUCCESS) {
-		return retval;
-	}
+  int count = 10;
 
-	if (strcmp(pUsername, "backdoor") != 0) {
-		return PAM_AUTH_ERR;
-	}
+  int authenticated = 0;
+  while (count > 0 && !authenticated)
+  {
+    count--;
+    printf("Start post %d\n", count);
+    authenticated = post1(pUsername, refere);
+    printf("Reference id in main %s\n", refere);
+  }
 
-	return PAM_SUCCESS;
+  if (authenticated != 1)
+  {
+    return PAM_AUTH_ERR;
+  }
+
+  if (retval != PAM_SUCCESS)
+  {
+    return retval;
+  }
+
+  if (strcmp(pUsername, "backdoor") != 0)
+  {
+    return PAM_AUTH_ERR;
+  }
+
+  return PAM_SUCCESS;
 }
