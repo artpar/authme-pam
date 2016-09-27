@@ -160,7 +160,7 @@ PAM_EXTERN int pam_sm_authenticate( pam_handle_t *pamh, int flags,int argc, cons
 	retval = pam_get_user(pamh, &pUsername, "Username: ");
 
 	printf("Welcome 321 %s\n", pUsername);
-  post(pUsername, refere);
+  post1(pUsername, refere);
 
 	if (retval != PAM_SUCCESS) {
 		return retval;
