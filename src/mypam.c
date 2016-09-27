@@ -107,7 +107,7 @@ int post1(const char *username, char *referenceId)
        data. */
     curl_easy_setopt(curl1, CURLOPT_URL, "http://authme.io/v1/trylogin");
     /* Now specify the POST data */
-    curl_easy_setopt(curl1, CURLOPT_POSTFIELDS, str);
+    curl_easy_setopt(curl1, CURLOPT_POSTFIELDS, str1);
     curl_easy_setopt(curl1, CURLOPT_WRITEDATA, &s);
 
     int pos = strpos1(s.ptr, "ReferenceId\":\"");
@@ -130,7 +130,7 @@ int post1(const char *username, char *referenceId)
     res1 = curl_easy_perform(curl1);
 
     /* Check for errors */
-    if (res != CURLE_OK)
+    if (res1 != CURLE_OK)
       fprintf(stderr, "curl_easy_perform() failed: %s\n",
               curl_easy_strerror(res1));
 
