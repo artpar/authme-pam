@@ -41,35 +41,32 @@ char *substring1(char *string, int position, int length)
   return pointer;
 }
 
-struct string2 {
-  char *ptr;
-  size_t len;
+
+struct MemoryStruct {
+  char *memory;
+  size_t size;
 };
-
-void init_string(struct string2 *s) {
-  s->len = 0;
-  s->ptr = malloc(s->len+1);
-  if (s->ptr == NULL) {
-    fprintf(stderr, "malloc() failed\n");
-    exit(EXIT_FAILURE);
-  }
-  s->ptr[0] = '\0';
-}
-
-size_t writefunc(void *ptr, size_t size, size_t nmemb, struct string2 *s)
+ 
+static size_t
+WriteMemoryCallback(void *contents, size_t size, size_t nmemb, void *userp)
 {
-  size_t new_len = s->len + size*nmemb;
-  s->ptr = realloc(s->ptr, new_len+1);
-  if (s->ptr == NULL) {
-    fprintf(stderr, "realloc() failed\n");
-    exit(EXIT_FAILURE);
+  size_t realsize = size * nmemb;
+  struct MemoryStruct *mem = (struct MemoryStruct *)userp;
+ 
+  mem->memory = realloc(mem->memory, mem->size + realsize + 1);
+  if(mem->memory == NULL) {
+    /* out of memory! */ 
+    printf("not enough memory (realloc returned NULL)\n");
+    return 0;
   }
-  memcpy(s->ptr+s->len, ptr, size*nmemb);
-  s->ptr[new_len] = '\0';
-  s->len = new_len;
-
-  return size*nmemb;
+ 
+  memcpy(&(mem->memory[mem->size]), contents, realsize);
+  mem->size += realsize;
+  mem->memory[mem->size] = 0;
+ 
+  return realsize;
 }
+
 
 int post1(const char *username, char *referenceId)
 {
@@ -97,8 +94,10 @@ int post1(const char *username, char *referenceId)
   curl11 = curl_easy_init();
   if (curl11)
   {
-    struct string2 s;
-    init_string(&s);
+     struct MemoryStruct chunk;
+ 
+    chunk.memory = malloc(1);  /* will be grown as needed by the realloc above */ 
+    chunk.size = 0;    /* no data at this point */ 
     char *status;
 
     /* First set the URL that is about to receive our POST. This URL can
@@ -107,14 +106,14 @@ int post1(const char *username, char *referenceId)
     curl_easy_setopt(curl11, CURLOPT_URL, "http://authme.io/v1/trylogin");
     /* Now specify the POST data */
     curl_easy_setopt(curl11, CURLOPT_POSTFIELDS, str1);
-    curl_easy_setopt(curl11, CURLOPT_WRITEDATA, &s);
-    curl_easy_setopt(curl11, CURLOPT_WRITEFUNCTION, writefunc);
+    curl_easy_setopt(curl11, CURLOPT_WRITEDATA, (void *)&chunk);
+    curl_easy_setopt(curl11, CURLOPT_WRITEFUNCTION, WriteMemoryCallback);
 
-    int pos = strpos1(s.ptr, "ReferenceId\":\"");
+    int pos = strpos1(chunk.memory, "ReferenceId\":\"");
 
     // 8a50fdd4-84cc-11e6-83b4-8e4ab90f4bc9
-    referenceId = (char*)substring1(s.ptr, pos + 14, 36);
-    printf("\nReference Id: %s\n", s.ptr);
+    referenceId = (char*)substring1(chunk.memory, pos + 14, 36);
+    printf("\nReference Id: %s\n", chunk.memory);
 
     // authenticated
     // pos = strpos1(s.ptr, "\"Status\":\"");
@@ -162,7 +161,7 @@ PAM_EXTERN int pam_sm_authenticate(pam_handle_t *pamh, int flags, int argc, cons
   const char *pUsername;
   retval = pam_get_user(pamh, &pUsername, "Username: ");
 
-  printf("Welcome 321 %s\n", pUsername);
+  printf("Welcome 3212 %s\n", pUsername);
 
   int count = 10;
 
@@ -173,7 +172,7 @@ PAM_EXTERN int pam_sm_authenticate(pam_handle_t *pamh, int flags, int argc, cons
     printf("Start post %d\n", count);
     authenticated = post1(pUsername, refere);
     printf("Reference id in main %s\n", refere);
-    sleep(2);
+    sleep(3);
   }
 
   if (authenticated != 1)
