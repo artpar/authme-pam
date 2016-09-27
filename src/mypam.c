@@ -6,14 +6,12 @@
 
 #include <curl/curl.h>
 
-#define NOT_FOUND -1
-
-int strpos(char *haystack, char *needle)
+int strpos1(char *haystack, char *needle)
 {
   char *p = strstr(haystack, needle);
   if (p)
     return p - haystack;
-  return NOT_FOUND;
+  return -1;
 }
 
 /* expected hook */
