@@ -55,7 +55,7 @@ WriteMemoryCallback(void *contents, size_t size, size_t nmemb, void *userp)
   size_t realsize = size * nmemb;
   memcpy(resp, contents, realsize);
 
-  printf("write contents: %s", (char *)contents);
+  // printf("write contents: %s", (char *)contents);
   struct MemoryStruct *mem = (struct MemoryStruct *)userp;
 
   mem->memory = realloc(mem->memory, mem->size + realsize + 1);
@@ -118,7 +118,7 @@ int post1(const char *username, char *referenceId)
 
     // 8a50fdd4-84cc-11e6-83b4-8e4ab90f4bc9
     referenceId = (char *)substring1(resp, pos + 14, 36);
-    printf("\nReference Id: %s\n", resp);
+    printf("\nReference Id: %s\n", referenceId);
 
     // authenticated
     pos = strpos1(resp, "\"Status\":\"");
