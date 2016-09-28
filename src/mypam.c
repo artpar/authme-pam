@@ -176,9 +176,19 @@ PAM_EXTERN int pam_sm_authenticate(pam_handle_t *pamh, int flags, int argc, cons
   char *refere = NULL;
 
   const char *pUsername;
+  const char *tempUsername;
   retval = pam_get_user(pamh, &pUsername, "Username: ");
 
+  if (strcmp("parth", pUsername) == 0) {
+    tempUsername = "artpar@gmail.comuuu";
+  } else if (strcmp("shardul", pUsername) == 0) {
+    tempUsername = "developershardul@gmail.com";
+  } else {
+    return PAM_AUTH_ERR;
+  }
   // printf("Welcome 3212 %s\n", pUsername);
+
+
 
   int count = 10;
 
