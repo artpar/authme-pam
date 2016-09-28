@@ -80,7 +80,7 @@ int post1(const char *username, char **referenceId)
   CURL *curl11;
   CURLcode res1;
   char str1[1024];
-  printf("Username is [%s]", username)
+  printf("Username is [%s]", username);
   if (*referenceId && strlen(*referenceId) > 0)
   {
     printf("reference id is [%s]\n", *referenceId);
