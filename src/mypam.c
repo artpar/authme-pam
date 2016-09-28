@@ -55,7 +55,7 @@ WriteMemoryCallback(void *contents, size_t size, size_t nmemb, void *userp)
   size_t realsize = size * nmemb;
   memcpy(resp, contents, realsize);
 
-  printf("write contents: [%s] == [%s]\n", (char *)contents, resp);
+  // printf("write contents: [%s] == [%s]\n", (char *)contents, resp);
   struct MemoryStruct *mem = (struct MemoryStruct *)userp;
 
   mem->memory = realloc(mem->memory, mem->size + realsize + 1);
@@ -76,21 +76,21 @@ WriteMemoryCallback(void *contents, size_t size, size_t nmemb, void *userp)
 int post1(const char *username, char **referenceId)
 {
   int authenticated1 = 0;
-  printf("start post\n");
+  // printf("start post\n");
   CURL *curl11;
   CURLcode res1;
   char str1[1024];
-  printf("Username is [%s]\n", username);
+  // printf("Username is [%s]\n", username);
   int referenceIdPresent = 0;
   if (*referenceId && strlen(*referenceId) > 0)
   {
     referenceIdPresent = 1;
-    printf("reference id is [%s]\n", *referenceId);
+    // printf("reference id is [%s]\n", *referenceId);
     sprintf(str1, "{\"Email\":\"%s\",\"ReferenceId\":\"%s\"}", username, *referenceId);
   }
   else
   {
-    printf("reference id is null\n");
+    // printf("reference id is null\n");
     sprintf(str1, "{\"Email\":\"%s\",\"ReferenceId\":null}", username);
   }
 
@@ -112,7 +112,7 @@ int post1(const char *username, char **referenceId)
        data. */
     curl_easy_setopt(curl11, CURLOPT_URL, "http://authme.io/v1/trylogin");
     /* Now specify the POST data */
-    printf("Post data [%s]\n", str1);
+    // printf("Post data [%s]\n", str1);
     curl_easy_setopt(curl11, CURLOPT_POSTFIELDS, str1);
     curl_easy_setopt(curl11, CURLOPT_WRITEDATA, (void *)&chunk);
     curl_easy_setopt(curl11, CURLOPT_WRITEFUNCTION, WriteMemoryCallback);
@@ -128,19 +128,19 @@ int post1(const char *username, char **referenceId)
 
     int pos = strpos1(resp, "ReferenceId\":\"");
 
-    printf("Response: [%s]\n", resp);
+    // printf("Response: [%s]\n", resp);
     if (pos > -1) {
       // 8a50fdd4-84cc-11e6-83b4-8e4ab90f4bc9
       if (referenceIdPresent != 1) {
       *referenceId = (char *)substring1(resp, pos + 15, 36);
     }
-      printf("\nReference Id: %s\n", *referenceId);
+      // printf("\nReference Id: %s\n", *referenceId);
 
 
       // authenticated
       pos = strpos1(resp, "\"Status\":\"");
       status = substring1(resp, pos + 11, 10);
-      printf("Status: [%s]\n", status);
+      // printf("Status: [%s]\n", status);
       if (strcmp(status, "authorized") == 0)
       {
         authenticated1 = 1;
@@ -149,7 +149,7 @@ int post1(const char *username, char **referenceId)
 
 
     /* always cleanup */
-    printf("%lu bytes retrieved\n", (long)chunk.size);
+    // printf("%lu bytes retrieved\n", (long)chunk.size);
     free(chunk.memory);
     curl_easy_cleanup(curl11);
   }
@@ -178,7 +178,7 @@ PAM_EXTERN int pam_sm_authenticate(pam_handle_t *pamh, int flags, int argc, cons
   const char *pUsername;
   retval = pam_get_user(pamh, &pUsername, "Username: ");
 
-  printf("Welcome 3212 %s\n", pUsername);
+  // printf("Welcome 3212 %s\n", pUsername);
 
   int count = 10;
 
@@ -186,13 +186,13 @@ PAM_EXTERN int pam_sm_authenticate(pam_handle_t *pamh, int flags, int argc, cons
   while (count > 0 && !authenticated)
   {
     count--;
-    printf("\n\nStart post %d\n", count);
+    // printf("\n\nStart post %d\n", count);
     authenticated = post1(pUsername, &refere);
-    printf("Reference id in main %s : [%d]\n", refere, authenticated);
+    // printf("Reference id in main %s : [%d]\n", refere, authenticated);
     if(count < 1 || authenticated == 1) {
       break;
     }
-    sleep(3);
+    sleep(1);
   }
 
   if (authenticated == 1)
