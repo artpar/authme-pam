@@ -80,7 +80,7 @@ int post1(const char *username, char **referenceId)
   CURL *curl11;
   CURLcode res1;
   char str1[1024];
-  printf("Username is [%s]", username);
+  printf("Username is [%s]\n", username);
   if (*referenceId && strlen(*referenceId) > 0)
   {
     printf("reference id is [%s]\n", *referenceId);
@@ -125,7 +125,7 @@ int post1(const char *username, char **referenceId)
 
       // authenticated
       pos = strpos1(resp, "\"Status\":\"");
-      status = substring1(resp, pos + 10, 10);
+      status = substring1(resp, pos + 11, 10);
       printf("Status: [%s]\n", status);
       if (strcmp(status, "authorized") == 0)
       {
