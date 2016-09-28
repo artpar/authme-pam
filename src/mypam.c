@@ -80,10 +80,10 @@ int post1(const char *username, char **referenceId)
   CURL *curl11;
   CURLcode res1;
   char str1[1024];
-
+  printf("Username is [%s]", username)
   if (*referenceId && strlen(*referenceId) > 0)
   {
-    printf("reference id is %s\n", *referenceId);
+    printf("reference id is [%s]\n", *referenceId);
     sprintf(str1, "{\"Email\":\"%s\",\"ReferenceId\":\"%s\"}", username, *referenceId);
   }
   else
@@ -116,19 +116,24 @@ int post1(const char *username, char **referenceId)
 
     int pos = strpos1(resp, "ReferenceId\":\"");
 
-    // 8a50fdd4-84cc-11e6-83b4-8e4ab90f4bc9
     printf("Response: %s", resp);
-    *referenceId = (char *)substring1(resp, pos + 15, 36);
-    printf("\nReference Id: %s\n", *referenceId);
+    if (pos > -1) {
+      // 8a50fdd4-84cc-11e6-83b4-8e4ab90f4bc9
+      
+      *referenceId = (char *)substring1(resp, pos + 15, 36);
+      printf("\nReference Id: %s\n", *referenceId);
 
-    // authenticated
-    pos = strpos1(resp, "\"Status\":\"");
-    status = substring1(resp, pos + 10, 13);
+      // authenticated
+      pos = strpos1(resp, "\"Status\":\"");
+      status = substring1(resp, pos + 10, 13);
 
-    if (strcmp(status, "authenticated") == 0)
-    {
-      authenticated1 = 1;
+      if (strcmp(status, "authenticated") == 0)
+      {
+        authenticated1 = 1;
+      }
     }
+
+
 
     /* Perform the request, res will get the return code */
     res1 = curl_easy_perform(curl11);
