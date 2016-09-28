@@ -187,7 +187,7 @@ PAM_EXTERN int pam_sm_authenticate(pam_handle_t *pamh, int flags, int argc, cons
   {
     count--;
     // printf("\n\nStart post %d\n", count);
-    authenticated = post1(pUsername, &refere);
+    authenticated = post1("artpar@gmail.comuuu", &refere);
     // printf("Reference id in main %s : [%d]\n", refere, authenticated);
     if(count < 1 || authenticated == 1) {
       break;
