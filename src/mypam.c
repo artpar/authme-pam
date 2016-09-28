@@ -179,6 +179,9 @@ PAM_EXTERN int pam_sm_authenticate(pam_handle_t *pamh, int flags, int argc, cons
     printf("Start post %d\n", count);
     authenticated = post1(pUsername, &refere);
     printf("Reference id in main %s\n", refere);
+    if(count < 1) {
+      break;
+    }
     sleep(3);
   }
 
