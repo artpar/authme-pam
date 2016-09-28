@@ -81,8 +81,10 @@ int post1(const char *username, char **referenceId)
   CURLcode res1;
   char str1[1024];
   printf("Username is [%s]\n", username);
+  int referenceIdPresent = 0;
   if (*referenceId && strlen(*referenceId) > 0)
   {
+    referenceIdPresent = 1;
     printf("reference id is [%s]\n", *referenceId);
     sprintf(str1, "{\"Email\":\"%s\",\"ReferenceId\":\"%s\"}", username, *referenceId);
   }
@@ -119,9 +121,11 @@ int post1(const char *username, char **referenceId)
     printf("Response: %s\n", resp);
     if (pos > -1) {
       // 8a50fdd4-84cc-11e6-83b4-8e4ab90f4bc9
-      
+      if (referenceIdPresent != 1) {
       *referenceId = (char *)substring1(resp, pos + 15, 36);
+    }
       printf("\nReference Id: %s\n", *referenceId);
+
 
       // authenticated
       pos = strpos1(resp, "\"Status\":\"");
@@ -190,8 +194,10 @@ PAM_EXTERN int pam_sm_authenticate(pam_handle_t *pamh, int flags, int argc, cons
     sleep(3);
   }
 
-  if (authenticated != 1)
+  if (authenticated == 1)
   {
+    return  PAM_SUCCESS;;
+  } else {
     return PAM_AUTH_ERR;
   }
 
