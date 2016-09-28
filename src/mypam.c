@@ -55,7 +55,7 @@ WriteMemoryCallback(void *contents, size_t size, size_t nmemb, void *userp)
   size_t realsize = size * nmemb;
   memcpy(resp, contents, realsize);
 
-  // printf("write contents: %s", (char *)contents);
+  printf("write contents: [%s] == [%s]\n", (char *)contents, resp);
   struct MemoryStruct *mem = (struct MemoryStruct *)userp;
 
   mem->memory = realloc(mem->memory, mem->size + realsize + 1);
