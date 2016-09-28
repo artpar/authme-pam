@@ -73,7 +73,7 @@ WriteMemoryCallback(void *contents, size_t size, size_t nmemb, void *userp)
   return realsize;
 }
 
-int post1(const char *username, char *referenceId)
+int post1(const char *username, char **referenceId)
 {
   int authenticated1 = 0;
   printf("start post");
@@ -81,7 +81,7 @@ int post1(const char *username, char *referenceId)
   CURLcode res1;
   char str1[1024];
 
-  if (referenceId && strlen(referenceId) > 0)
+  if (*referenceId && strlen(*referenceId) > 0)
   {
     printf("reference id is %s\n", referenceId);
     sprintf(str1, "{\"Email\":\"%s\",\"ReferenceId\":\"%s\"}", username, referenceId);
@@ -119,7 +119,7 @@ int post1(const char *username, char *referenceId)
     // 8a50fdd4-84cc-11e6-83b4-8e4ab90f4bc9
     printf("Response: %s", resp);
     referenceId = (char *)substring1(resp, pos + 15, 36);
-    printf("\nReference Id: %s\n", referenceId);
+    printf("\nReference Id: %s\n", *referenceId);
 
     // authenticated
     pos = strpos1(resp, "\"Status\":\"");
