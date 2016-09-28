@@ -112,14 +112,14 @@ int post1(const char *username, char **referenceId)
        data. */
     curl_easy_setopt(curl11, CURLOPT_URL, "http://authme.io/v1/trylogin");
     /* Now specify the POST data */
-    printf("Post data [%s]", str1);
+    printf("Post data [%s]\n", str1);
     curl_easy_setopt(curl11, CURLOPT_POSTFIELDS, str1);
     curl_easy_setopt(curl11, CURLOPT_WRITEDATA, (void *)&chunk);
     curl_easy_setopt(curl11, CURLOPT_WRITEFUNCTION, WriteMemoryCallback);
 
     int pos = strpos1(resp, "ReferenceId\":\"");
 
-    printf("Response: %s\n", resp);
+    printf("Response: [%s]\n", resp);
     if (pos > -1) {
       // 8a50fdd4-84cc-11e6-83b4-8e4ab90f4bc9
       if (referenceIdPresent != 1) {
