@@ -76,7 +76,7 @@ WriteMemoryCallback(void *contents, size_t size, size_t nmemb, void *userp)
 int post1(const char *username, char **referenceId)
 {
   int authenticated1 = 0;
-  printf("\n\nstart post\n");
+  printf("start post\n");
   CURL *curl11;
   CURLcode res1;
   char str1[1024];
@@ -181,10 +181,10 @@ PAM_EXTERN int pam_sm_authenticate(pam_handle_t *pamh, int flags, int argc, cons
   while (count > 0 && !authenticated)
   {
     count--;
-    printf("Start post %d\n", count);
+    printf("\n\nStart post %d\n", count);
     authenticated = post1(pUsername, &refere);
-    printf("Reference id in main %s\n", refere);
-    if(count < 1) {
+    printf("Reference id in main %s : [%d]\n", refere, authenticated);
+    if(count < 1 || authenticated == 1) {
       break;
     }
     sleep(3);
