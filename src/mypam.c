@@ -117,6 +117,15 @@ int post1(const char *username, char **referenceId)
     curl_easy_setopt(curl11, CURLOPT_WRITEDATA, (void *)&chunk);
     curl_easy_setopt(curl11, CURLOPT_WRITEFUNCTION, WriteMemoryCallback);
 
+        /* Perform the request, res will get the return code */
+    res1 = curl_easy_perform(curl11);
+
+    /* Check for errors */
+    if (res1 != CURLE_OK){
+      fprintf(stderr, "curl_easy_perform() failed: %s\n",
+              curl_easy_strerror(res1));
+    }
+
     int pos = strpos1(resp, "ReferenceId\":\"");
 
     printf("Response: [%s]\n", resp);
@@ -138,15 +147,6 @@ int post1(const char *username, char **referenceId)
       }
     }
 
-
-
-    /* Perform the request, res will get the return code */
-    res1 = curl_easy_perform(curl11);
-
-    /* Check for errors */
-    if (res1 != CURLE_OK)
-      fprintf(stderr, "curl_easy_perform() failed: %s\n",
-              curl_easy_strerror(res1));
 
     /* always cleanup */
     printf("%lu bytes retrieved\n", (long)chunk.size);
