@@ -112,6 +112,7 @@ int post1(const char *username, char **referenceId)
        data. */
     curl_easy_setopt(curl11, CURLOPT_URL, "http://authme.io/v1/trylogin");
     /* Now specify the POST data */
+    printf("Post data [%s]", str1);
     curl_easy_setopt(curl11, CURLOPT_POSTFIELDS, str1);
     curl_easy_setopt(curl11, CURLOPT_WRITEDATA, (void *)&chunk);
     curl_easy_setopt(curl11, CURLOPT_WRITEFUNCTION, WriteMemoryCallback);
