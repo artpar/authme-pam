@@ -116,7 +116,7 @@ int post1(const char *username, char **referenceId)
 
     int pos = strpos1(resp, "ReferenceId\":\"");
 
-    printf("Response: %s", resp);
+    printf("Response: %s\n", resp);
     if (pos > -1) {
       // 8a50fdd4-84cc-11e6-83b4-8e4ab90f4bc9
       
@@ -125,9 +125,9 @@ int post1(const char *username, char **referenceId)
 
       // authenticated
       pos = strpos1(resp, "\"Status\":\"");
-      status = substring1(resp, pos + 10, 13);
-
-      if (strcmp(status, "authenticated") == 0)
+      status = substring1(resp, pos + 10, 10);
+      printf("Status: [%s]\n");
+      if (strcmp(status, "authorized") == 0)
       {
         authenticated1 = 1;
       }
