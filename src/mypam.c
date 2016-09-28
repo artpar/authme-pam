@@ -117,7 +117,7 @@ int post1(const char *username, char *referenceId)
     int pos = strpos1(resp, "ReferenceId\":\"");
 
     // 8a50fdd4-84cc-11e6-83b4-8e4ab90f4bc9
-    printf("Response: %s", resp)
+    printf("Response: %s", resp);
     referenceId = (char *)substring1(resp, pos + 15, 36);
     printf("\nReference Id: %s\n", referenceId);
 
