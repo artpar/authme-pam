@@ -76,7 +76,7 @@ WriteMemoryCallback(void *contents, size_t size, size_t nmemb, void *userp)
 int post1(const char *username, char **referenceId)
 {
   int authenticated1 = 0;
-  printf("start post");
+  printf("\n\nstart post\n");
   CURL *curl11;
   CURLcode res1;
   char str1[1024];
