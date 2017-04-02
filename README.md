@@ -1,43 +1,88 @@
 Intro
 =====
 
-This is just a simple PAM module and test code for it. There really isn't much to it, but it does make a good example of how to get started with a PAM module.
+This PAM modules enabled you to use AuthMe to login your servers and protect them from password breaches.
 
 To build, either use the build scripts or use these commands:
 
+**Requirements**
+
+curl-dev
+`apt-get install libcurl4-openssl-dev`
+
+
 **Build the PAM module**
 
-`gcc -fPIC -fno-stack-protector -c src/mypam.c`
+`gcc -fPIC -lcurl -fno-stack-protector -c src/authme_pam.c`
 
-`sudo ld -x --shared -o /lib/security/mypam.so mypam.o`
+`sudo ld -lcurl -x --shared -o /lib/security/authme_pam.so authme_pam.o`
 
 The first command builds the object file in the current directory and the second links it with PAM. Since it's a shared library, PAM can use it on the fly without having to restart.
 
 **Build Test**
 
-`g++ -o pam_test src/test.c -lpam -lpam_misc`
+`g++ -o pam_test src/authme_pam_test.c -lpam -lpam_misc`
 
 OR
 
-`gcc -o pam_test src/test.c -lpam -lpam_misc`
+`gcc -o pam_test src/authme_pam_test.c -lpam -lpam_misc`
 
-The test program is valid C, so it could be compiled using gcc or g++. I like g++ better because I'll probably want to extend it and I like C++ better.
+The test program is valid C, so it could be compiled using gcc or g++.
 
 Simple Usage
 ------------
 
-The build scripts will take care of putting your module where it needs to be, `/lib/security`, so the next thing to do is edit config files.
+PAM module for Linux x64 (tested with ubuntu 14.04/16.04/16.10)
 
-The config files are located in `/etc/pam.d/` and the one I edited was `/etc/pam.d/common-auth`.
+Couple of notes
+---------------
 
-The test application tests auth and account functionality (although account isn't very interesting). At the top of the pam file (or anywhere), put these lines:
+### Domain
+The users on the system will me mapped to the domain. So if my linux account username is "```user1```" and authme pam is configured with ```domain``` "```gmail.com```", then swipe will go to ```user1@gmail.com```
 
-	auth sufficient mypam.so
-	account sufficient mypam.so
+### Root User
+AuthMe will not proceed for root users. Have explicitly disabled it for username: root
 
-I think the account part should technically go in `/etc/pam.d/common-account`, but I put mine in the same place so I'd remember to take them out later.
+### ApiKey/ApiSecret
+It is recommended to use new set of api keys for each installation.
+You can generate any number of keys from (Authme)[https://account.authme.authme.host]
 
-To run the test program, just do: `pam_test backdoor` and you should get some messages saying that you're authenticated! Maybe this is how Sam Flynn 'hacked' his father's computer in TRON Legacy =D.
+###No Swipe/Failure
+The flow will go to other auth(password) mechanism if swipe failed. 
+
+
+## Steps to Install
+
+1. Copy authme_pam.so to /lib/security/authme_pam.so (create /lib/security if it doesn't already exists)
+
+```scp /lib/security/authme_pam.so root@<YOUR_MACHINE_IP>:/lib/security/authme_pam.so```
+
+2. Enable AuthMe in PAM
+
+```nano /etc/pam.d/common-auth```
+
+Add this line
+```
+auth sufficient authme_pam.so apikey=<API-KEY> apisecret=<API-SECRET> baseurl=https://api.authme.authme.host domain=gmail.com
+```
+3. Enable Challenge Response Authentication for SSH
+
+nano /etc/ssh/sshd_config
+
+Change line
+
+```ChallengeResponseAuthentication no```
+
+to 
+
+```ChallengeResponseAuthentication yes```
+
+
+4. Restart sshd
+
+```service ssh restart ```
+
+
 
 Resources
 =========
