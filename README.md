@@ -47,7 +47,7 @@ AuthMe will not proceed for root users. Have explicitly disabled it for username
 It is recommended to use new set of api keys for each installation.
 You can generate any number of keys from (Authme)[https://account.authme.authme.host]
 
-###No Swipe/Failure
+### No Swipe/Failure
 The flow will go to other auth(password) mechanism if swipe failed. 
 
 
