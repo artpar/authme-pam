@@ -45,7 +45,7 @@ AuthMe will not proceed for root users. Have explicitly disabled it for username
 
 ### ApiKey/ApiSecret
 It is recommended to use new set of api keys for each installation.
-You can generate any number of keys from (Authme)[https://account.authme.authme.host]
+You can generate any number of keys from [Authme](https://account.authme.authme.host)
 
 ### No Swipe/Failure
 The flow will go to other auth(password) mechanism if swipe failed. 
@@ -53,7 +53,7 @@ The flow will go to other auth(password) mechanism if swipe failed.
 
 ## Steps to Install
 
-1. Copy authme_pam.so to /lib/security/authme_pam.so (create /lib/security if it doesn't already exists)
+1. Copy ```authme_pam.so``` to ```/lib/security/authme_pam.so``` (create ```/lib/security``` if it doesn't already exists)
 
 ```scp /lib/security/authme_pam.so root@<YOUR_MACHINE_IP>:/lib/security/authme_pam.so```
 
